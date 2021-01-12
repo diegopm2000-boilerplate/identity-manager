@@ -1,0 +1,54 @@
+{
+  "name": "userservice_nodejs",
+  "version": "0.1.0",
+  "description": "User Service in NodeJS using Clean Architecture",
+  "main": "app.js",
+  "scripts": {
+    "start": "node src/app/infrastructure/app.js init",
+    "lint": "node_modules/.bin/eslint src/**/*.js",
+    "test": "node ./node_modules/mocha/bin/mocha test/**/*.test.js --recursive --timeout 20000 --reporter spec --exit",
+    "test-single": "node ./node_modules/mocha/bin/mocha --timeout 20000",
+    "coverage": "nyc --reporter=text --reporter=lcov npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diegopm2000-boilerplate/userservice_nodejs.git"
+  },
+  "author": "Diego Perez Molinero",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diegopm2000-boilerplate/userservice_nodejs/issues"
+  },
+  "homepage": "https://github.com/diegopm2000-boilerplate/userservice_nodejs#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^7.17.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "mocha": "^8.2.1",
+    "nyc": "^15.1.0",
+    "rewire": "^5.0.0",
+    "sinon": "^9.2.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-openapi": "^7.2.0",
+    "jsonschema": "^1.4.0",
+    "log-color": "^1.0.0",
+    "make-runnable": "^1.3.8",
+    "moment": "^2.29.1",
+    "mongoose": "^5.11.10",
+    "mongoose-hidden": "^1.9.1",
+    "uniqid": "^5.2.0",
+    "winston": "^3.3.3",
+    "winston-timestamp-colorize": "^1.1.0"
+  },
+  "nyc": {
+    "all": true,
+    "check-coverage": true,
+    "include": [
+      "src/**/*.js"
+    ]
+  }
+}
