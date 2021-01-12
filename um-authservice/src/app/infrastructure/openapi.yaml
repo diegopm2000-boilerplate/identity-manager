@@ -1,0 +1,108 @@
+openapi: 3.0.0
+info:
+  title: Game Collector API - Clean Architecture NodeJS
+  description: User Service API
+  version: 0.1.0
+
+servers:
+  - url: /api
+
+paths:
+
+  # Healthcheck
+
+  /healthcheck:
+    get:
+      summary: Healthcheck of the application
+      tags:
+        - Healthcheck
+      operationId: healthcheck
+      responses: 
+        "200": 
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+              example:
+                message: 'OK'
+
+  # Authenticate
+
+  /authenticate:
+    post:
+      summary: authenticate user in the application returning a JWT Token
+      tags:
+        - "Authentication"
+      operationId: authenticate
+      parameters:
+        - name: username
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/AuthToken"
+
+components:
+
+  # ##################################################################
+  # RESPONSES
+  # ##################################################################
+
+  responses:
+
+    ObjectNotFoundResponse:
+      description: Object not found
+      content:
+        application/json:
+          schema: 
+            $ref: "#/components/schemas/Error"
+          example:
+            code: 404
+            message: Object not found in the system
+
+  # ##################################################################
+  # SCHEMAS
+  # ##################################################################
+
+  schemas:
+
+    Object:
+      type: object
+
+    Success:
+      type: object
+      properties:
+        message:
+          type: string
+      required: ['message']
+
+      additionalProperties: false
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+      required: ['code', 'message']
+      additionalProperties: false
+
+    AuthToken:      
+      properties:
+        token:
+          type: string
+      required: ['token']
+      additionalProperties: false

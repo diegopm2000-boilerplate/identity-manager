@@ -1,27 +1,28 @@
-// healthcheck.controller.js
+// authenticate.controller.js
 
 const logger = require('../../../shared/infrastructure/log/logFacade');
 const presenter = require('../../../shared/adapter/presenter/httpPresenter');
-const healthcheckUC = require('../../usecase/healthcheck.usecase');
+const authenticateUC = require('../../usecase/auhenticate.usecase');
 
 // //////////////////////////////////////////////////////////////////////////////
 // Properties & Constants
 // //////////////////////////////////////////////////////////////////////////////
 
-const MODULE_NAME = '[healthcheck Controller]';
+const MODULE_NAME = '[authenticate Controller]';
 
 // //////////////////////////////////////////////////////////////////////////////
 // Public Methods
 // //////////////////////////////////////////////////////////////////////////////
 
-exports.healthcheck = async (req, res, next) => {
+exports.authenticate = async (req, res, next) => {
   try {
-    const funcName = 'healthcheck';
+    const funcName = 'authenticate';
     // IN
-    logger.info(`${MODULE_NAME}:${funcName} (IN) -> no params`);
+    const { username, password} = req.headers
+    logger.info(`${MODULE_NAME}:${funcName} (IN) -> username: ${username}, password: ${password}`);
 
     // Business Logic
-    const result = await healthcheckUC.execute(logger, presenter);
+    const result = await authenticateUC.execute(logger, presenter, username, password);
 
     // Return result
     logger.info(`${MODULE_NAME}:${funcName} (OUT) -> result: ${JSON.stringify(result)}`);
