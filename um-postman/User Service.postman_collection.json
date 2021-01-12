@@ -1,0 +1,1563 @@
+{
+	"info": {
+		"_postman_id": "647bbca9-a0dd-48a7-9e5e-2f9624bcbfaf",
+		"name": "User Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Manual Testing",
+			"item": [
+				{
+					"name": "Healthcheck",
+					"item": [
+						{
+							"name": "Healthcheck",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/healthcheck",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"healthcheck"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Get user by Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"CaseId is present\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"id\");",
+											"    const jsonData = pm.response.json();",
+											"    pm.environment.set('userId', jsonData.id)",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/users/{{userId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all users",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/users",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete user",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/users/{{userId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"id is present\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"id\");",
+											"    const jsonData = pm.response.json();",
+											"    pm.environment.set('userId', jsonData.id)",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"loginname\": \"userTestNew\",\n    \"name\": \"nameTestNew\",\n    \"surname\": \"surnameTestNew\",\n    \"email\": \"emailTestNew@mail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/users",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"loginname\": \"userTestUpdated\",\n    \"name\": \"nameTestUpdated\",\n    \"surname\": \"surnameTestUpdated\",\n    \"email\": \"emailTestUpdated@mail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/users/{{userId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Automatic Testing",
+			"item": [
+				{
+					"name": "Healthcheck",
+					"item": [
+						{
+							"name": "Test",
+							"item": [
+								{
+									"name": "HEA - 001 - Successfully CASE",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Schema is valid\", function () {",
+													"    const schema = {",
+													"        \"message\": { \"type\": \"string\" }, ",
+													"    };",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+													"});",
+													"",
+													"pm.test(\"Expected response is OK\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    const expectedResult = { message: 'OK' };",
+													"    pm.expect(jsonData).to.deep.equal(expectedResult);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{host}}/api/healthcheck",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"api",
+												"healthcheck"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "USE - 001 - Get User By Id - User not found",
+							"item": [
+								{
+									"name": "Setup",
+									"item": [
+										{
+											"name": "USE - 001 - 01s - Delete user",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															"try {",
+															"    // Generate random number for userId",
+															"    const randomId = Date.now();",
+															"    pm.environment.set( \"userId\", `${randomId}` );",
+															"}",
+															"catch (err) {",
+															"    console.debug(err);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{host}}/api/users/{{userId}}",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users",
+														"{{userId}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Test",
+									"item": [
+										{
+											"name": "USE - 001 - 01t - Get user by Id",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 404\", function () {",
+															"    pm.response.to.have.status(404);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{host}}/api/users/{{userId}}",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users",
+														"{{userId}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Teardown",
+									"item": []
+								}
+							]
+						},
+						{
+							"name": "USE - 002 - Get User By Id - User found",
+							"item": [
+								{
+									"name": "Setup",
+									"item": [
+										{
+											"name": "USE - 002- 01s - Create the user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"id is present\", function () {",
+															"    const jsonData = pm.response.json();",
+															"    pm.environment.set('userId', jsonData.id);",
+															"    pm.globals.set('userData', jsonData);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"loginname\": \"userTestNew-1\",\n    \"name\": \"nameTestNew-1\",\n    \"surname\": \"surnameTestNew-1\",\n    \"email\": \"emailTestNew-1@mail.com\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{host}}/api/users",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Test",
+									"item": [
+										{
+											"name": "USE - 002 - 01t - Get user by Id",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Schema is valid\", function () {",
+															"    const schema = pm.globals.get('userSchema');",
+															"    const jsonData = pm.response.json();",
+															"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+															"});",
+															"",
+															"pm.test(\"Expected response  is OK\", function () {",
+															"    const jsonData = pm.response.json();",
+															"    const expectedResult = pm.globals.get('userData');",
+															"    pm.expect(jsonData).to.deep.equal(expectedResult);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{host}}/api/users/{{userId}}",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users",
+														"{{userId}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Teardown",
+									"item": [
+										{
+											"name": "USE - 002 - 01d - Delete user",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 204\", function () {",
+															"    pm.response.to.have.status(204);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{host}}/api/users/{{userId}}",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users",
+														"{{userId}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						},
+						{
+							"name": "USE - 003 - Get All Users",
+							"item": [
+								{
+									"name": "Setup",
+									"item": []
+								},
+								{
+									"name": "Test",
+									"item": [
+										{
+											"name": "USE - 003 - 01t - Get all users",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Schema is valid\", function () {",
+															"    const schema = pm.globals.get('userListSchema');",
+															"    const jsonData = pm.response.json();",
+															"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{host}}/api/users",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Teardown",
+									"item": []
+								}
+							]
+						},
+						{
+							"name": "USE - 004 - Delete User - User not found",
+							"item": [
+								{
+									"name": "Setup",
+									"item": []
+								},
+								{
+									"name": "Test",
+									"item": [
+										{
+											"name": "USE - 004 - 01t - Delete user by Id",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 404\", function () {",
+															"    pm.response.to.have.status(404);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{host}}/api/users/nonsenseid",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users",
+														"nonsenseid"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "USE - 005 - Delete User - User found",
+							"item": [
+								{
+									"name": "Setup",
+									"item": [
+										{
+											"name": "USE - 005 - 01s - Create user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"id is present\", function () {",
+															"    pm.expect(pm.response.text()).to.include(\"id\");",
+															"    const jsonData = pm.response.json();",
+															"    pm.environment.set('userId', jsonData.id)",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"loginname\": \"userTestNewAlt\",\n    \"name\": \"nameTestNew\",\n    \"surname\": \"surnameTestNew\",\n    \"email\": \"emailTestNew@mail.com\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{host}}/api/users",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Test",
+									"item": [
+										{
+											"name": "USE - 005 - 01t - Delete user by Id",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 204\", function () {",
+															"    pm.response.to.have.status(204);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{host}}/api/users/{{userId}}",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users",
+														"{{userId}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Teardown",
+									"item": []
+								}
+							]
+						},
+						{
+							"name": "USE - 006 - Create user - Successfully",
+							"item": [
+								{
+									"name": "Setup",
+									"item": []
+								},
+								{
+									"name": "Test",
+									"item": [
+										{
+											"name": "USE - 006 - 01t - Create user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"id is present\", function () {",
+															"    pm.expect(pm.response.text()).to.include(\"id\");",
+															"    const jsonData = pm.response.json();",
+															"    pm.environment.set('userId', jsonData.id)",
+															"});",
+															"",
+															"pm.test(\"Schema is valid\", function () {",
+															"    const schema = pm.globals.get('userSchema');",
+															"    const jsonData = pm.response.json();",
+															"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"loginname\": \"userTestNewAlt2\",\n    \"name\": \"nameTestNewAlt2\",\n    \"surname\": \"surnameTestNewAlt2\",\n    \"email\": \"emailTestNewAlt2@mail.com\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{host}}/api/users",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Teardown",
+									"item": [
+										{
+											"name": "USE - 006 - 01t - Delete user by Id",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 204\", function () {",
+															"    pm.response.to.have.status(204);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{host}}/api/users/{{userId}}",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users",
+														"{{userId}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "USE - 007 - Create user - Error - bad schema",
+							"item": [
+								{
+									"name": "Setup",
+									"item": []
+								},
+								{
+									"name": "Test",
+									"item": [
+										{
+											"name": "USE - 007 - 01t - Create user with bad schema",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 400\", function () {",
+															"    pm.response.to.have.status(400);",
+															"});",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"loginnameBad\": \"userTestNewAlt2\",\n    \"name\": \"nameTestNewAlt2\",\n    \"surname\": \"surnameTestNewAlt2\",\n    \"email\": \"emailTestNewAlt2@mail.com\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{host}}/api/users",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Teardown",
+									"item": []
+								}
+							]
+						},
+						{
+							"name": "USE - 008 - Create user - Error - loginname repeated",
+							"item": [
+								{
+									"name": "Setup",
+									"item": [
+										{
+											"name": "USE - 008 - 01s - Create user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"id is present\", function () {",
+															"    pm.expect(pm.response.text()).to.include(\"id\");",
+															"    const jsonData = pm.response.json();",
+															"    pm.environment.set('userId', jsonData.id)",
+															"});",
+															"",
+															"pm.test(\"Schema is valid\", function () {",
+															"    const schema = pm.globals.get('userSchema');",
+															"    const jsonData = pm.response.json();",
+															"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"loginname\": \"userTestNewAlt3\",\n    \"name\": \"nameTestNewAlt3\",\n    \"surname\": \"surnameTestNewAlt3\",\n    \"email\": \"emailTestNewAlt3@mail.com\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{host}}/api/users",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Test",
+									"item": [
+										{
+											"name": "USE - 008 - 01t - Create user with the same loginname",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 409\", function () {",
+															"    pm.response.to.have.status(409);",
+															"});",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"loginname\": \"userTestNewAlt3\",\n    \"name\": \"nameTestNewAlt3\",\n    \"surname\": \"surnameTestNewAlt3\",\n    \"email\": \"emailTestNewAlt3@mail.com\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{host}}/api/users",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Teardown",
+									"item": [
+										{
+											"name": "USE - 008 - 01d - Delete user by Id",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 204\", function () {",
+															"    pm.response.to.have.status(204);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{host}}/api/users/{{userId}}",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users",
+														"{{userId}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "USE - 009 - Update user - Successfully",
+							"item": [
+								{
+									"name": "Setup",
+									"item": [
+										{
+											"name": "USE - 009 - 01s - Create user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"id is present\", function () {",
+															"    pm.expect(pm.response.text()).to.include(\"id\");",
+															"    const jsonData = pm.response.json();",
+															"    pm.environment.set('userId', jsonData.id)",
+															"});",
+															"",
+															"pm.test(\"Schema is valid\", function () {",
+															"    const schema = pm.globals.get('userSchema');",
+															"    const jsonData = pm.response.json();",
+															"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"loginname\": \"userTestNewAlt2\",\n    \"name\": \"nameTestNewAlt2\",\n    \"surname\": \"surnameTestNewAlt2\",\n    \"email\": \"emailTestNewAlt2@mail.com\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{host}}/api/users",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Test",
+									"item": [
+										{
+											"name": "USE - 009 - 01t - Update user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Schema is valid\", function () {",
+															"    const schema = pm.globals.get('userSchema');",
+															"    const jsonData = pm.response.json();",
+															"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"loginname\": \"userTestUpdated\",\n    \"name\": \"nameTestUpdated\",\n    \"surname\": \"surnameTestUpdated\",\n    \"email\": \"emailTestUpdated@mail.com\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{host}}/api/users/{{userId}}",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users",
+														"{{userId}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Teardown",
+									"item": [
+										{
+											"name": "USE - 009 - 01d - Delete user",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 204\", function () {",
+															"    pm.response.to.have.status(204);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{host}}/api/users/{{userId}}",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users",
+														"{{userId}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						},
+						{
+							"name": "USE - 010 - Update user - Error - user not found",
+							"item": [
+								{
+									"name": "Setup",
+									"item": []
+								},
+								{
+									"name": "Test",
+									"item": [
+										{
+											"name": "USE - 010 - 01t - Update user not found",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 404\", function () {",
+															"    pm.response.to.have.status(404);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"loginname\": \"userTestUpdated\",\n    \"name\": \"nameTestUpdated\",\n    \"surname\": \"surnameTestUpdated\",\n    \"email\": \"emailTestUpdated@mail.com\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{host}}/api/users/nonsenseid",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users",
+														"nonsenseid"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Teardown",
+									"item": []
+								}
+							]
+						},
+						{
+							"name": "USE - 011 - Update user - Error - bad schema",
+							"item": [
+								{
+									"name": "Setup",
+									"item": []
+								},
+								{
+									"name": "Test",
+									"item": [
+										{
+											"name": "USE - 011 - 01t - Update user with bad schema",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 400\", function () {",
+															"    pm.response.to.have.status(400);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"loginnamebad\": \"userTestUpdated\",\n    \"name\": \"nameTestUpdated\",\n    \"surname\": \"surnameTestUpdated\",\n    \"email\": \"emailTestUpdated@mail.com\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{host}}/api/users/nonsenseid",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users",
+														"nonsenseid"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Teardown",
+									"item": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						},
+						{
+							"name": "USE - 012 - Update user - Error - loginname belongs to another user Copy",
+							"item": [
+								{
+									"name": "Setup",
+									"item": [
+										{
+											"name": "USE - 012 - 01t - Create user A",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"id is present\", function () {",
+															"    pm.expect(pm.response.text()).to.include(\"id\");",
+															"    const jsonData = pm.response.json();",
+															"    pm.environment.set('userIdA', jsonData.id)",
+															"});",
+															"",
+															"pm.test(\"Schema is valid\", function () {",
+															"    const schema = pm.globals.get('userSchema');",
+															"    const jsonData = pm.response.json();",
+															"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"loginname\": \"userTestA\",\n    \"name\": \"nameTestA\",\n    \"surname\": \"surnameTestA\",\n    \"email\": \"emailTestA@mail.com\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{host}}/api/users",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "USE - 012 - 01t - Create user B",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"id is present\", function () {",
+															"    pm.expect(pm.response.text()).to.include(\"id\");",
+															"    const jsonData = pm.response.json();",
+															"    pm.environment.set('userIdB', jsonData.id)",
+															"});",
+															"",
+															"pm.test(\"Schema is valid\", function () {",
+															"    const schema = pm.globals.get('userSchema');",
+															"    const jsonData = pm.response.json();",
+															"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"loginname\": \"userTestB\",\n    \"name\": \"nameTestB\",\n    \"surname\": \"surnameTestB\",\n    \"email\": \"emailTestB@mail.com\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{host}}/api/users",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Test",
+									"item": [
+										{
+											"name": "USE - 012 - 01t - Update user B with loginname A",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 409\", function () {",
+															"    pm.response.to.have.status(409);",
+															"});",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"loginname\": \"userTestA\",\n    \"name\": \"nameTestB\",\n    \"surname\": \"surnameTestB\",\n    \"email\": \"emailTestB@mail.com\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{host}}/api/users/{{userIdB}}",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users",
+														"{{userIdB}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Teardown",
+									"item": [
+										{
+											"name": "USE - 012 - 01d - Delete user A",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 204\", function () {",
+															"    pm.response.to.have.status(204);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{host}}/api/users/{{userIdA}}",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users",
+														"{{userIdA}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "USE - 012 - 02d - Delete user B",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 204\", function () {",
+															"    pm.response.to.have.status(204);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{host}}/api/users/{{userIdB}}",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"api",
+														"users",
+														"{{userIdB}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}
