@@ -20,7 +20,7 @@ exports.getById = async (id) => new Promise((resolve) => {
 
   // Prepare result
   const result = {
-    id: 1, loginname: 'userTest1', name: 'nameUserTest1', surname: 'surnameUserTest1', email: 'emailUserTest1@email.com',
+    id: 1, loginname: 'userTest1', name: 'nameUserTest1', surname: 'surnameUserTest1', email: 'emailUserTest1@email.com', password: 'password',
   };
 
   // Return result
@@ -49,16 +49,16 @@ exports.getAll = async () => new Promise((resolve) => {
   // Prepare result
   const result = [
     {
-      id: 1, loginname: 'userTest1', name: 'nameUserTest1', surname: 'surnameUserTest1', email: 'emailUserTest1@email.com',
+      id: 1, loginname: 'userTest1', name: 'nameUserTest1', surname: 'surnameUserTest1', email: 'emailUserTest1@email.com', password: 'password',
     },
     {
-      id: 2, loginname: 'userTest2', name: 'nameUserTest2', surname: 'surnameUserTest2', email: 'emailUserTest2@email.com',
+      id: 2, loginname: 'userTest2', name: 'nameUserTest2', surname: 'surnameUserTest2', email: 'emailUserTest2@email.com', password: 'password',
     },
     {
-      id: 3, loginname: 'userTest3', name: 'nameUserTest3', surname: 'surnameUserTest3', email: 'emailUserTest3@email.com',
+      id: 3, loginname: 'userTest3', name: 'nameUserTest3', surname: 'surnameUserTest3', email: 'emailUserTest3@email.com', password: 'password',
     },
     {
-      id: 4, loginname: 'userTest4', name: 'nameUserTest4', surname: 'surnameUserTest4', email: 'emailUserTest4@email.com',
+      id: 4, loginname: 'userTest4', name: 'nameUserTest4', surname: 'surnameUserTest4', email: 'emailUserTest4@email.com', password: 'password',
     },
   ];
 

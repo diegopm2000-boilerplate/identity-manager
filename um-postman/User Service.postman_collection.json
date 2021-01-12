@@ -127,7 +127,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"loginname\": \"userTestNew\",\n    \"name\": \"nameTestNew\",\n    \"surname\": \"surnameTestNew\",\n    \"email\": \"emailTestNew@mail.com\"\n}",
+									"raw": "{\n    \"loginname\": \"userTestNew\",\n    \"name\": \"nameTestNew\",\n    \"surname\": \"surnameTestNew\",\n    \"email\": \"emailTestNew@mail.com\",\n    \"password\": \"password\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -154,7 +154,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"loginname\": \"userTestUpdated\",\n    \"name\": \"nameTestUpdated\",\n    \"surname\": \"surnameTestUpdated\",\n    \"email\": \"emailTestUpdated@mail.com\"\n}",
+									"raw": "{\n    \"loginname\": \"userTestUpdated\",\n    \"name\": \"nameTestUpdated\",\n    \"surname\": \"surnameTestUpdated\",\n    \"email\": \"emailTestUpdated@mail.com\",\n    \"password\": \"passwordUpdated\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -356,7 +356,7 @@
 												"header": [],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"loginname\": \"userTestNew-1\",\n    \"name\": \"nameTestNew-1\",\n    \"surname\": \"surnameTestNew-1\",\n    \"email\": \"emailTestNew-1@mail.com\"\n}",
+													"raw": "{\n    \"loginname\": \"userTestNew-1\",\n    \"name\": \"nameTestNew-1\",\n    \"surname\": \"surnameTestNew-1\",\n    \"email\": \"emailTestNew-1@mail.com\",\n    \"password\": \"password\"\n}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -624,7 +624,7 @@
 												"header": [],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"loginname\": \"userTestNewAlt\",\n    \"name\": \"nameTestNew\",\n    \"surname\": \"surnameTestNew\",\n    \"email\": \"emailTestNew@mail.com\"\n}",
+													"raw": "{\n    \"loginname\": \"userTestNewAlt\",\n    \"name\": \"nameTestNew\",\n    \"surname\": \"surnameTestNew\",\n    \"email\": \"emailTestNew@mail.com\",\n    \"password\": \"password\"\n}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -731,7 +731,7 @@
 												"header": [],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"loginname\": \"userTestNewAlt2\",\n    \"name\": \"nameTestNewAlt2\",\n    \"surname\": \"surnameTestNewAlt2\",\n    \"email\": \"emailTestNewAlt2@mail.com\"\n}",
+													"raw": "{\n    \"loginname\": \"userTestNewAlt2\",\n    \"name\": \"nameTestNewAlt2\",\n    \"surname\": \"surnameTestNewAlt2\",\n    \"email\": \"emailTestNewAlt2@mail.com\",\n    \"password\": \"password\"\n}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -889,7 +889,7 @@
 												"header": [],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"loginname\": \"userTestNewAlt3\",\n    \"name\": \"nameTestNewAlt3\",\n    \"surname\": \"surnameTestNewAlt3\",\n    \"email\": \"emailTestNewAlt3@mail.com\"\n}",
+													"raw": "{\n    \"loginname\": \"userTestNewAlt3\",\n    \"name\": \"nameTestNewAlt3\",\n    \"surname\": \"surnameTestNewAlt3\",\n    \"email\": \"emailTestNewAlt3@mail.com\",\n    \"password\": \"password\"\n}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -935,7 +935,7 @@
 												"header": [],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"loginname\": \"userTestNewAlt3\",\n    \"name\": \"nameTestNewAlt3\",\n    \"surname\": \"surnameTestNewAlt3\",\n    \"email\": \"emailTestNewAlt3@mail.com\"\n}",
+													"raw": "{\n    \"loginname\": \"userTestNewAlt3\",\n    \"name\": \"nameTestNewAlt3\",\n    \"surname\": \"surnameTestNewAlt3\",\n    \"email\": \"emailTestNewAlt3@mail.com\",\n    \"password\": \"password\"\n}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -1034,7 +1034,7 @@
 												"header": [],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"loginname\": \"userTestNewAlt2\",\n    \"name\": \"nameTestNewAlt2\",\n    \"surname\": \"surnameTestNewAlt2\",\n    \"email\": \"emailTestNewAlt2@mail.com\"\n}",
+													"raw": "{\n    \"loginname\": \"userTestNewAlt2\",\n    \"name\": \"nameTestNewAlt2\",\n    \"surname\": \"surnameTestNewAlt2\",\n    \"email\": \"emailTestNewAlt2@mail.com\",\n    \"password\": \"password\"\n}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -1085,7 +1085,7 @@
 												"header": [],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"loginname\": \"userTestUpdated\",\n    \"name\": \"nameTestUpdated\",\n    \"surname\": \"surnameTestUpdated\",\n    \"email\": \"emailTestUpdated@mail.com\"\n}",
+													"raw": "{\n    \"loginname\": \"userTestUpdated\",\n    \"name\": \"nameTestUpdated\",\n    \"surname\": \"surnameTestUpdated\",\n    \"email\": \"emailTestUpdated@mail.com\",\n    \"password\": \"password\"\n}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -1197,7 +1197,7 @@
 												"header": [],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"loginname\": \"userTestUpdated\",\n    \"name\": \"nameTestUpdated\",\n    \"surname\": \"surnameTestUpdated\",\n    \"email\": \"emailTestUpdated@mail.com\"\n}",
+													"raw": "{\n    \"loginname\": \"userTestUpdated\",\n    \"name\": \"nameTestUpdated\",\n    \"surname\": \"surnameTestUpdated\",\n    \"email\": \"emailTestUpdated@mail.com\",\n    \"password\": \"password\"\n}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -1343,7 +1343,7 @@
 												"header": [],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"loginname\": \"userTestA\",\n    \"name\": \"nameTestA\",\n    \"surname\": \"surnameTestA\",\n    \"email\": \"emailTestA@mail.com\"\n}",
+													"raw": "{\n    \"loginname\": \"userTestA\",\n    \"name\": \"nameTestA\",\n    \"surname\": \"surnameTestA\",\n    \"email\": \"emailTestA@mail.com\",\n    \"password\": \"password\"\n}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -1395,7 +1395,7 @@
 												"header": [],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"loginname\": \"userTestB\",\n    \"name\": \"nameTestB\",\n    \"surname\": \"surnameTestB\",\n    \"email\": \"emailTestB@mail.com\"\n}",
+													"raw": "{\n    \"loginname\": \"userTestB\",\n    \"name\": \"nameTestB\",\n    \"surname\": \"surnameTestB\",\n    \"email\": \"emailTestB@mail.com\",\n    \"password\": \"password\"\n}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -1441,7 +1441,7 @@
 												"header": [],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"loginname\": \"userTestA\",\n    \"name\": \"nameTestB\",\n    \"surname\": \"surnameTestB\",\n    \"email\": \"emailTestB@mail.com\"\n}",
+													"raw": "{\n    \"loginname\": \"userTestA\",\n    \"name\": \"nameTestB\",\n    \"surname\": \"surnameTestB\",\n    \"email\": \"emailTestB@mail.com\",\n    \"password\": \"password\"\n}",
 													"options": {
 														"raw": {
 															"language": "json"

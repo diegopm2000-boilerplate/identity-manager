@@ -24,6 +24,9 @@ exports.execute = async (logger, presenter, userRepository, id) => {
     return presenter.presentObjectNotFound();
   }
 
+  // Delete password from object
+  innerResult.password = undefined;
+
   // Build & Return result
   const result = presenter.presentObject(innerResult);
   logger.debug(`${MODULE_NAME}:${funcName} (OUT) -> result: ${JSON.stringify(result)}`);

@@ -17,6 +17,7 @@ const SCHEMA = {
     name: { type: 'string', maxLength: 45 },
     surname: { type: 'string', maxLength: 45 },
     email: { type: 'string', maxLength: 45 },
+    password: { type: 'string', maxLength: 120 },
   },
   required: ['id', 'loginname', 'name', 'surname', 'email'],
   additionalProperties: false,

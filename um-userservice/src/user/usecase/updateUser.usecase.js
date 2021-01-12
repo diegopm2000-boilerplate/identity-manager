@@ -12,13 +12,14 @@ const MODULE_NAME = '[updateUser UC]';
 // Public Methods
 // //////////////////////////////////////////////////////////////////////////////
 
-exports.execute = async (logger, presenter, schemaValidator, userRepository, dataIN, id) => {
+exports.execute = async (logger, presenter, schemaValidator, encrypter, userRepository, dataIN, id) => {
   // IN
   logger.debug(`${MODULE_NAME} (IN)  -> dataIN: ${JSON.stringify(dataIN)}, id: ${id}`);
 
   // Build data
   const data = JSON.parse(JSON.stringify(dataIN));
   data.id = id;
+  data.password = encrypter.encrypt(data.password);
 
   // Create Domain Object
   const objectDO = new Videogame(data, schemaValidator);
@@ -34,7 +35,6 @@ exports.execute = async (logger, presenter, schemaValidator, userRepository, dat
 
   // Check if exists a previous object with the same loginname and distinct id
   const objectsFound = await userRepository.getByFilter({ loginname: data.loginname });
-  console.log(`---> objectsFound: ${JSON.stringify(objectsFound)}`);
   if (Array.isArray(objectsFound) && objectsFound.find((x) => x.id !== id)) {
     return presenter.presentConflict('There is a previous User with the same loginname in the system');
   }
@@ -45,6 +45,9 @@ exports.execute = async (logger, presenter, schemaValidator, userRepository, dat
 
   // Load the updated object
   const updatedObj = await userRepository.getById(id);
+
+  // Delete password from object
+  updatedObj.password = undefined;
 
   // Build & Return result
   const result = presenter.presentObject(updatedObj);

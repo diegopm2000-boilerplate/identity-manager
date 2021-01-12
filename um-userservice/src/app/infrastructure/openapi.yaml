@@ -47,6 +47,7 @@ paths:
               name: nameTest
               surname: surnameTest
               email: userTest@mail.com
+              password: password
 
       responses: 
         "201": 
@@ -245,7 +246,9 @@ components:
           type: string
         email:
           type: string
-      required: ['loginname', 'name', 'surname', 'email']
+        password:
+          type: string
+      required: ['loginname', 'name', 'surname', 'email', 'password']
       additionalProperties: false
 
     UserData:

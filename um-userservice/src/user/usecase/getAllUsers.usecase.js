@@ -19,8 +19,15 @@ exports.execute = async (logger, presenter, userRepository) => {
   const innerResult = await userRepository.getAll();
   logger.debug(`${MODULE_NAME}:${funcName} (MID) -> innerResult: ${JSON.stringify(innerResult)}`);
 
+  // Delete passwords from innerResults
+  const innerResultFixed = innerResult.map((element) => {
+    // eslint-disable-next-line no-param-reassign
+    element.password = undefined;
+    return element;
+  });
+
   // Build & Return result
-  const result = presenter.presentObject(innerResult);
+  const result = presenter.presentObject(innerResultFixed);
   logger.debug(`${MODULE_NAME}:${funcName} (OUT) -> result: ${JSON.stringify(result)}`);
   return result;
 };

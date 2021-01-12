@@ -18,6 +18,9 @@ exports.execute = async (logger, presenter, userRepository, filter) => {
   const innerResult = await userRepository.getByFilter(filter);
   logger.debug(`${MODULE_NAME} (MID) -> innerResult: ${JSON.stringify(innerResult)}`);
 
+  // Delete password from object
+  innerResult.password = undefined;
+
   // Build & Return result
   const result = presenter.presentObject(innerResult);
   logger.debug(`${MODULE_NAME} (OUT) -> result: ${JSON.stringify(result)}`);

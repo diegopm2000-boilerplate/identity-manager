@@ -2,6 +2,7 @@
 
 const uniqIdGenerator = require('../../../shared/infrastructure/util/uniqIdGenerator');
 const schemaValidator = require('../../../shared/infrastructure/util/schemaValidator');
+const encrypter = require('../../../shared/infrastructure/util/encrypter');
 
 const logger = require('../../../shared/infrastructure/log/logFacade');
 const presenter = require('../../../shared/adapter/presenter/httpPresenter');
@@ -89,7 +90,7 @@ exports.createUser = async (req, res, next) => {
     logger.info(`${MODULE_NAME}:${funcName} (IN) -> newUserData: ${JSON.stringify(newUserData)}`);
 
     // Execute Business Logic
-    const result = await createUserUC.execute(logger, presenter, uniqIdGenerator, schemaValidator, userRepository, newUserData);
+    const result = await createUserUC.execute(logger, presenter, uniqIdGenerator, schemaValidator, encrypter, userRepository, newUserData);
 
     // Return Result
     logger.info(`${MODULE_NAME}:${funcName} (OUT) -> result: ${JSON.stringify(result)}`);
@@ -109,7 +110,7 @@ exports.updateUser = async (req, res, next) => {
     logger.info(`${MODULE_NAME}:${funcName} (IN) -> newUserData: ${JSON.stringify(newUserData)}, userId: ${userId}`);
 
     // Execute Business Logic
-    const result = await updateUserUC.execute(logger, presenter, schemaValidator, userRepository, newUserData, userId);
+    const result = await updateUserUC.execute(logger, presenter, schemaValidator, encrypter, userRepository, newUserData, userId);
 
     // Return Result
     logger.info(`${MODULE_NAME}:${funcName} (OUT) -> result: ${JSON.stringify(result)}`);
