@@ -8,7 +8,7 @@ const logger = require('../../../shared/infrastructure/log/logFacade');
 const presenter = require('../../../shared/adapter/presenter/httpPresenter');
 
 const getUserByIdUC = require('../../usecase/getUserById.usecase');
-const getAllUsersUC = require('../../usecase/getAllUsers.usecase');
+const getUsersByFilterUC = require('../../usecase/getUsersByFilter.usecase');
 const deleteUserUC = require('../../usecase/deleteUser.usecase');
 const createUserUC = require('../../usecase/createUser.usecase');
 const updateUserUC = require('../../usecase/updateUser.usecase');
@@ -27,8 +27,8 @@ const MODULE_NAME = '[user Controller]';
 // //////////////////////////////////////////////////////////////////////////////
 
 exports.getUserById = async (req, res, next) => {
+  const funcName = 'getUserById';
   try {
-    const funcName = 'getUserById';
     // IN
     const { userId } = req.params;
     logger.info(`${MODULE_NAME}:${funcName} (IN) -> userId: ${userId}`);
@@ -40,32 +40,33 @@ exports.getUserById = async (req, res, next) => {
     logger.info(`${MODULE_NAME}:${funcName} (OUT) -> result: ${JSON.stringify(result)}`);
     res.status(result.status).json(result.data);
   } catch (error) {
-    logger.error(`${MODULE_NAME}:getUserById (ERROR) -> error.stack: ${error.stack}`);
+    logger.error(`${MODULE_NAME}:${funcName} (ERROR) -> error.stack: ${error.stack}`);
     next(new Error('Internal Error'));
   }
 };
 
-exports.getAllUsers = async (req, res, next) => {
+exports.getUsersByFilter = async (req, res, next) => {
+  const funcName = 'getUsersByFilter';
   try {
-    const funcName = 'getAll';
     // IN
-    logger.info(`${MODULE_NAME}:${funcName} (IN) -> no params`);
+    const filter = req.query || {};
+    logger.info(`${MODULE_NAME}:${funcName} (IN) -> filter: ${filter}`);
 
     // Execute Business Logic
-    const result = await getAllUsersUC.execute(logger, presenter, userRepository);
+    const result = await getUsersByFilterUC.execute(logger, presenter, userRepository, filter);
 
     // Return Result
     logger.info(`${MODULE_NAME}:${funcName} (OUT) -> result: ${JSON.stringify(result)}`);
     res.status(result.status).json(result.data);
   } catch (error) {
-    logger.error(`${MODULE_NAME}:getUserById (ERROR) -> error.stack: ${error.stack}`);
+    logger.error(`${MODULE_NAME}:${funcName} (ERROR) -> error.stack: ${error.stack}`);
     next(new Error('Internal Error'));
   }
 };
 
 exports.deleteUser = async (req, res, next) => {
+  const funcName = 'deleteUser';
   try {
-    const funcName = 'deleteUser';
     // IN
     const { userId } = req.params;
     logger.info(`${MODULE_NAME}:${funcName} (IN) -> userId: ${userId}`);
@@ -77,14 +78,14 @@ exports.deleteUser = async (req, res, next) => {
     logger.info(`${MODULE_NAME}:${funcName} (OUT) -> result: ${JSON.stringify(result)}`);
     res.status(result.status).json(result.data);
   } catch (error) {
-    logger.error(`${MODULE_NAME}:getUserById (ERROR) -> error.stack: ${error.stack}`);
+    logger.error(`${MODULE_NAME}:${funcName} (ERROR) -> error.stack: ${error.stack}`);
     next(new Error('Internal Error'));
   }
 };
 
 exports.createUser = async (req, res, next) => {
+  const funcName = 'createUser';
   try {
-    const funcName = 'createUser';
     // IN
     const newUserData = req.body;
     logger.info(`${MODULE_NAME}:${funcName} (IN) -> newUserData: ${JSON.stringify(newUserData)}`);
@@ -96,14 +97,14 @@ exports.createUser = async (req, res, next) => {
     logger.info(`${MODULE_NAME}:${funcName} (OUT) -> result: ${JSON.stringify(result)}`);
     res.status(result.status).json(result.data);
   } catch (error) {
-    logger.error(`${MODULE_NAME}:getUserById (ERROR) -> error.stack: ${error.stack}`);
+    logger.error(`${MODULE_NAME}:${funcName} (ERROR) -> error.stack: ${error.stack}`);
     next(new Error('Internal Error'));
   }
 };
 
 exports.updateUser = async (req, res, next) => {
+  const funcName = 'updateUser';
   try {
-    const funcName = 'updateUser';
     // IN
     const newUserData = req.body;
     const { userId } = req.params;
@@ -116,7 +117,7 @@ exports.updateUser = async (req, res, next) => {
     logger.info(`${MODULE_NAME}:${funcName} (OUT) -> result: ${JSON.stringify(result)}`);
     res.status(result.status).json(result.data);
   } catch (error) {
-    logger.error(`${MODULE_NAME}:getUserById (ERROR) -> error.stack: ${error.stack}`);
+    logger.error(`${MODULE_NAME}:${funcName} (ERROR) -> error.stack: ${error.stack}`);
     next(new Error('Internal Error'));
   }
 };

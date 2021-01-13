@@ -4,6 +4,10 @@ const logger = require('../../../shared/infrastructure/log/logFacade');
 const presenter = require('../../../shared/adapter/presenter/httpPresenter');
 const authenticateUC = require('../../usecase/auhenticate.usecase');
 
+const userRepository = require('../repository/remote/user.remote.repository');
+const tokenManager = require('../../../shared/infrastructure/util/jwtManager');
+const encrypter = require('../../../shared/infrastructure/util/encrypter');
+
 // //////////////////////////////////////////////////////////////////////////////
 // Properties & Constants
 // //////////////////////////////////////////////////////////////////////////////
@@ -18,11 +22,15 @@ exports.authenticate = async (req, res, next) => {
   try {
     const funcName = 'authenticate';
     // IN
-    const { username, password} = req.headers
+    const { username, password } = req.headers;
     logger.info(`${MODULE_NAME}:${funcName} (IN) -> username: ${username}, password: ${password}`);
 
+    // Get the remote endpoint
+    const endpoint = process.env.USER_SERVICE_ENDPOINT;
+    logger.info(`${MODULE_NAME}:${funcName} (MID) -> endpoint: ${endpoint}`);
+
     // Business Logic
-    const result = await authenticateUC.execute(logger, presenter, username, password);
+    const result = await authenticateUC.execute(logger, presenter, userRepository, endpoint, tokenManager, encrypter, username, password);
 
     // Return result
     logger.info(`${MODULE_NAME}:${funcName} (OUT) -> result: ${JSON.stringify(result)}`);

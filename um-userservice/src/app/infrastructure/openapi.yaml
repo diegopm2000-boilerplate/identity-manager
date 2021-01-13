@@ -75,7 +75,14 @@ paths:
       summary: Get users by filter
       tags:
         - Users
-      operationId: getAllUsers
+      operationId: getUsersByFilter
+      parameters:
+        - name: loginname
+          in: query
+          description: loginname of the user
+          required: false
+          schema:
+            type: string
       responses: 
         "200": 
           description: Data returned

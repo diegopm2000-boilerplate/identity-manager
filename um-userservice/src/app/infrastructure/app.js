@@ -56,7 +56,7 @@ const initExpressOpenAPI = (expressApp) => {
     operations: {
       healthcheck: healthcheckController.healthcheck,
       getUserById: userController.getUserById,
-      getAllUsers: userController.getAllUsers,
+      getUsersByFilter: userController.getUsersByFilter,
       deleteUser: userController.deleteUser,
       createUser: userController.createUser,
       updateUser: userController.updateUser,

@@ -6,3 +6,7 @@
 export EXPRESS_PORT="8081"
 env | grep '^EXPRESS_PORT='
 
+# User Service endpoint
+export USER_SERVICE_ENDPOINT="http://localhost:8080/api/users"
+env | grep '^USER_SERVICE_ENDPOINT='
+

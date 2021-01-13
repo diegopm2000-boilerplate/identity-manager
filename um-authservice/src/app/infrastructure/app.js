@@ -9,6 +9,8 @@ const logger = require('../../shared/infrastructure/log/logFacade');
 const healthcheckController = require('../../healthcheck/adapter/controller/healthcheck.controller');
 const authController = require('../../authentication/adapter/controller/authenticate.controller');
 
+const jwtManager = require('../../shared/infrastructure/util/jwtManager');
+
 // //////////////////////////////////////////////////////////////////////////////
 // PROPERTIES & CONSTANTS
 // //////////////////////////////////////////////////////////////////////////////
@@ -54,7 +56,6 @@ const initExpressOpenAPI = (expressApp) => {
     operations: {
       healthcheck: healthcheckController.healthcheck,
       authenticate: authController.authenticate,
-      
     },
   };
 
@@ -84,7 +85,10 @@ exports.init = async () => {
   // 5. Route for handle the 404 route not found
   expressApp.use(routeNotFoundErrorHandler);
 
-  // 6. App Start Result
+  // 6. Init JWT Manager
+  jwtManager.init('mysecret', 600, jwtManager.HS256);
+
+  // 7. App Start Result
   const result = true;
   logger.debug(`${MODULE_NAME}:init (OUT) -> App started: ${JSON.stringify(result)}`);
   return result;
