@@ -56,6 +56,7 @@ const initExpressOpenAPI = (expressApp) => {
     operations: {
       healthcheck: healthcheckController.healthcheck,
       authenticate: authController.authenticate,
+      refresh: authController.refresh,
     },
   };
 

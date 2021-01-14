@@ -27,7 +27,7 @@ paths:
               example:
                 message: 'OK'
 
-  # Authenticate
+  # Authenticate and get token
 
   /authenticate:
     post:
@@ -46,6 +46,28 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/AuthToken"
+
+  # Refresh token
+
+  /refresh:
+    post:
+      summary: refresh the user token in the application returning the JWT Token refreshed
+      tags:
+        - "Authentication"
+      operationId: refresh
+      parameters:
+        - name: token
+          in: header
+          required: true
+          schema:
+            $ref: "#/components/schemas/AuthToken"
       responses:
         "200":
           description: Success
