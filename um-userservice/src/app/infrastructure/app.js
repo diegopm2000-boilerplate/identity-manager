@@ -6,10 +6,11 @@ const bodyParser = require('body-parser');
 
 const logger = require('../../shared/infrastructure/log/logFacade');
 
-const mongoInfra = require('../../shared/infrastructure/database/mongo/mongo.infra');
-
 const healthcheckController = require('../../healthcheck/adapter/controller/healthcheck.controller');
 const userController = require('../../user/adapter/controller/user.controller');
+
+const webSecurity = require('../../shared/infrastructure/util/webSecurity');
+const mongoInfra = require('../../shared/infrastructure/database/mongo/mongo.infra');
 
 // //////////////////////////////////////////////////////////////////////////////
 // PROPERTIES & CONSTANTS
@@ -83,13 +84,16 @@ exports.init = async () => {
   const expressConfig = { port: expressPort };
   const expressApp = initExpress(expressConfig);
 
-  // 4. Init ExpressOpenApi
+  // 4. Init Web Security
+  webSecurity.init(expressApp);
+
+  // 5. Init ExpressOpenApi
   await initExpressOpenAPI(expressApp);
 
-  // 5. Route for handle the 404 route not found
+  // 6. Route for handle the 404 route not found
   expressApp.use(routeNotFoundErrorHandler);
 
-  // 6. Mongo init
+  // 7. Mongo init
   const mongoOptions = {
     mongoURL: process.env.MONGO_URL,
   };

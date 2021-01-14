@@ -4,12 +4,13 @@ const express = require('express');
 const expressOpenapi = require('express-openapi');
 const bodyParser = require('body-parser');
 
-const logger = require('../../shared/infrastructure/log/logFacade');
+const log = require('../../shared/infrastructure/log/logFacade');
 
 const healthcheckController = require('../../healthcheck/adapter/controller/healthcheck.controller');
 const authController = require('../../authentication/adapter/controller/authenticate.controller');
 
 const jwtManager = require('../../shared/infrastructure/util/jwtManager');
+const webSecurity = require('../../shared/infrastructure/util/webSecurity');
 
 // //////////////////////////////////////////////////////////////////////////////
 // PROPERTIES & CONSTANTS
@@ -23,7 +24,7 @@ const MODULE_NAME = '[App]';
 
 // eslint-disable-next-line no-unused-vars
 const errorHandler = (err, req, res, next) => {
-  logger.error(`${MODULE_NAME} (ERROR) --> error: ${err.stack}`);
+  log.error(`${MODULE_NAME} (ERROR) --> error: ${err.stack}`);
 
   const status = (err.status) ? err.status : 500;
   const errorObj = { code: status, message: err.message };
@@ -37,7 +38,7 @@ const routeNotFoundErrorHandler = (req, res, next) => {
 };
 
 const initExpress = (expressConfig) => {
-  logger.debug(`${MODULE_NAME}:${initExpress.name} (IN) -> expressConfig: ${JSON.stringify(expressConfig)}`);
+  log.debug(`${MODULE_NAME}:${initExpress.name} (IN) -> expressConfig: ${JSON.stringify(expressConfig)}`);
   const expressApp = express();
 
   expressApp.listen(expressConfig.port);
@@ -46,7 +47,7 @@ const initExpress = (expressConfig) => {
 };
 
 const initExpressOpenAPI = (expressApp) => {
-  logger.debug(`${MODULE_NAME}:${initExpressOpenAPI.name} (IN) -> expressApp: <<expressApp>>`);
+  log.debug(`${MODULE_NAME}:${initExpressOpenAPI.name} (IN) -> expressApp: <<expressApp>>`);
 
   const options = {
     app: expressApp,
@@ -68,32 +69,41 @@ const initExpressOpenAPI = (expressApp) => {
 // //////////////////////////////////////////////////////////////////////////////
 
 exports.init = async () => {
-  // 1. Init default logger
-  logger.defaultInit();
-  logger.debug(`${MODULE_NAME}:init (IN) --> no params`);
+  // 1. Init default log
+  log.defaultInit();
+  log.debug(`${MODULE_NAME}:init (IN) --> no params`);
 
   // 2. Load Config from environment
   const expressPort = process.env.EXPRESS_PORT;
-  logger.debug(`${MODULE_NAME}:init (MID) --> expressPort: ${expressPort}`);
+  log.debug(`${MODULE_NAME}:init (MID) --> expressPort: ${expressPort}`);
 
   // 3. Init Express
   const expressConfig = { port: expressPort };
   const expressApp = initExpress(expressConfig);
 
-  // 4. Init ExpressOpenApi
+  // 4. Init Web Security
+  webSecurity.init(expressApp);
+
+  // 5. Init ExpressOpenApi
   await initExpressOpenAPI(expressApp);
 
-  // 5. Route for handle the 404 route not found
+  // 6. Route for handle the 404 route not found
   expressApp.use(routeNotFoundErrorHandler);
 
-  // 6. Init JWT Manager
+  // 7. Init JWT Manager
   jwtManager.init('mysecret', 600, jwtManager.HS256);
 
-  // 7. App Start Result
+  // 8. App Start Result
   const result = true;
-  logger.debug(`${MODULE_NAME}:init (OUT) -> App started: ${JSON.stringify(result)}`);
+  log.debug(`${MODULE_NAME}:init (OUT) -> App started: ${JSON.stringify(result)}`);
   return result;
 };
+
+process.on('unhandledRejection', (err, p) => {
+  log.error(`${MODULE_NAME} (ERROR) --> An unhandledRejection occurred...`);
+  log.error(`${MODULE_NAME} (ERROR) --> Rejected Promise: ${p}`);
+  log.error(`${MODULE_NAME} (ERROR) --> Rejection: ${err}`);
+});
 
 require('make-runnable/custom')({
   printOutputFrame: false,

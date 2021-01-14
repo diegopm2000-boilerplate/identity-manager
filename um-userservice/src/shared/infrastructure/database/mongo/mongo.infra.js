@@ -61,7 +61,7 @@ exports.connect = async () => {
       const dbURI = buildDBURI();
       log.debug(`${MODULE_NAME}:${funcName} (MID) -> Trying to connect to mongodb using dbURI: ${dbURI}`);
 
-      await mongoose.connect(dbURI, { useNewUrlParser: true });
+      await mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
       log.debug(`${MODULE_NAME}:${funcName} (OUT) --> Executed, returning true`);
       return true;
