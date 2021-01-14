@@ -17,9 +17,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{host}}/api/healthcheck",
+									"raw": "{{userServiceHost}}/api/healthcheck",
 									"host": [
-										"{{host}}"
+										"{{userServiceHost}}"
 									],
 									"path": [
 										"api",
@@ -55,9 +55,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{host}}/api/users/{{userId}}",
+									"raw": "{{userServiceHost}}/api/users/{{userId}}",
 									"host": [
-										"{{host}}"
+										"{{userServiceHost}}"
 									],
 									"path": [
 										"api",
@@ -74,13 +74,37 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{host}}/api/users",
+									"raw": "{{userServiceHost}}/api/users",
 									"host": [
-										"{{host}}"
+										"{{userServiceHost}}"
 									],
 									"path": [
 										"api",
 										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get users by filter",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{userServiceHost}}/api/users?loginname=userTestNew",
+									"host": [
+										"{{userServiceHost}}"
+									],
+									"path": [
+										"api",
+										"users"
+									],
+									"query": [
+										{
+											"key": "loginname",
+											"value": "userTestNew"
+										}
 									]
 								}
 							},
@@ -92,9 +116,9 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{host}}/api/users/{{userId}}",
+									"raw": "{{userServiceHost}}/api/users/{{userId}}",
 									"host": [
-										"{{host}}"
+										"{{userServiceHost}}"
 									],
 									"path": [
 										"api",
@@ -135,9 +159,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}/api/users",
+									"raw": "{{userServiceHost}}/api/users",
 									"host": [
-										"{{host}}"
+										"{{userServiceHost}}"
 									],
 									"path": [
 										"api",
@@ -162,9 +186,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}/api/users/{{userId}}",
+									"raw": "{{userServiceHost}}/api/users/{{userId}}",
 									"host": [
-										"{{host}}"
+										"{{userServiceHost}}"
 									],
 									"path": [
 										"api",
@@ -221,9 +245,9 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{host}}/api/healthcheck",
+											"raw": "{{userServiceHost}}/api/healthcheck",
 											"host": [
-												"{{host}}"
+												"{{userServiceHost}}"
 											],
 											"path": [
 												"api",
@@ -270,9 +294,9 @@
 												"method": "DELETE",
 												"header": [],
 												"url": {
-													"raw": "{{host}}/api/users/{{userId}}",
+													"raw": "{{userServiceHost}}/api/users/{{userId}}",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -307,9 +331,9 @@
 												"method": "GET",
 												"header": [],
 												"url": {
-													"raw": "{{host}}/api/users/{{userId}}",
+													"raw": "{{userServiceHost}}/api/users/{{userId}}",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -364,9 +388,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{host}}/api/users",
+													"raw": "{{userServiceHost}}/api/users",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -412,9 +436,9 @@
 												"method": "GET",
 												"header": [],
 												"url": {
-													"raw": "{{host}}/api/users/{{userId}}",
+													"raw": "{{userServiceHost}}/api/users/{{userId}}",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -458,9 +482,9 @@
 												"method": "DELETE",
 												"header": [],
 												"url": {
-													"raw": "{{host}}/api/users/{{userId}}",
+													"raw": "{{userServiceHost}}/api/users/{{userId}}",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -530,9 +554,9 @@
 												"method": "GET",
 												"header": [],
 												"url": {
-													"raw": "{{host}}/api/users",
+													"raw": "{{userServiceHost}}/api/users",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -579,9 +603,9 @@
 												"method": "DELETE",
 												"header": [],
 												"url": {
-													"raw": "{{host}}/api/users/nonsenseid",
+													"raw": "{{userServiceHost}}/api/users/nonsenseid",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -632,9 +656,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{host}}/api/users",
+													"raw": "{{userServiceHost}}/api/users",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -668,9 +692,9 @@
 												"method": "DELETE",
 												"header": [],
 												"url": {
-													"raw": "{{host}}/api/users/{{userId}}",
+													"raw": "{{userServiceHost}}/api/users/{{userId}}",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -739,9 +763,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{host}}/api/users",
+													"raw": "{{userServiceHost}}/api/users",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -775,9 +799,9 @@
 												"method": "DELETE",
 												"header": [],
 												"url": {
-													"raw": "{{host}}/api/users/{{userId}}",
+													"raw": "{{userServiceHost}}/api/users/{{userId}}",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -831,9 +855,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{host}}/api/users",
+													"raw": "{{userServiceHost}}/api/users",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -897,9 +921,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{host}}/api/users",
+													"raw": "{{userServiceHost}}/api/users",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -943,9 +967,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{host}}/api/users",
+													"raw": "{{userServiceHost}}/api/users",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -979,9 +1003,9 @@
 												"method": "DELETE",
 												"header": [],
 												"url": {
-													"raw": "{{host}}/api/users/{{userId}}",
+													"raw": "{{userServiceHost}}/api/users/{{userId}}",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -1042,9 +1066,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{host}}/api/users",
+													"raw": "{{userServiceHost}}/api/users",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -1093,9 +1117,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{host}}/api/users/{{userId}}",
+													"raw": "{{userServiceHost}}/api/users/{{userId}}",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -1130,9 +1154,9 @@
 												"method": "DELETE",
 												"header": [],
 												"url": {
-													"raw": "{{host}}/api/users/{{userId}}",
+													"raw": "{{userServiceHost}}/api/users/{{userId}}",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -1205,9 +1229,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{host}}/api/users/nonsenseid",
+													"raw": "{{userServiceHost}}/api/users/nonsenseid",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -1264,9 +1288,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{host}}/api/users/nonsenseid",
+													"raw": "{{userServiceHost}}/api/users/nonsenseid",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -1351,9 +1375,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{host}}/api/users",
+													"raw": "{{userServiceHost}}/api/users",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -1403,9 +1427,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{host}}/api/users",
+													"raw": "{{userServiceHost}}/api/users",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -1449,9 +1473,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{host}}/api/users/{{userIdB}}",
+													"raw": "{{userServiceHost}}/api/users/{{userIdB}}",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -1486,9 +1510,9 @@
 												"method": "DELETE",
 												"header": [],
 												"url": {
-													"raw": "{{host}}/api/users/{{userIdA}}",
+													"raw": "{{userServiceHost}}/api/users/{{userIdA}}",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",
@@ -1518,9 +1542,9 @@
 												"method": "DELETE",
 												"header": [],
 												"url": {
-													"raw": "{{host}}/api/users/{{userIdB}}",
+													"raw": "{{userServiceHost}}/api/users/{{userIdB}}",
 													"host": [
-														"{{host}}"
+														"{{userServiceHost}}"
 													],
 													"path": [
 														"api",

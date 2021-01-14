@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Game Collector API - Clean Architecture NodeJS
+  title: User Service API - Clean Architecture NodeJS
   description: User Service API
   version: 0.1.0
 

@@ -44,9 +44,11 @@
     "moment": "^2.29.1",
     "mongoose": "^5.11.10",
     "mongoose-hidden": "^1.9.1",
+    "swagger-ui-express": "^4.1.6",
     "uniqid": "^5.2.0",
     "winston": "^3.3.3",
-    "winston-timestamp-colorize": "^1.1.0"
+    "winston-timestamp-colorize": "^1.1.0",
+    "yamljs": "^0.3.0"
   },
   "nyc": {
     "all": true,

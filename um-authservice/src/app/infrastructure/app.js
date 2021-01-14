@@ -3,6 +3,8 @@
 const express = require('express');
 const expressOpenapi = require('express-openapi');
 const bodyParser = require('body-parser');
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
 
 const log = require('../../shared/infrastructure/log/logFacade');
 
@@ -17,6 +19,8 @@ const webSecurity = require('../../shared/infrastructure/util/webSecurity');
 // //////////////////////////////////////////////////////////////////////////////
 
 const MODULE_NAME = '[App]';
+
+const API_DOCUMENT = './src/app/infrastructure/openapi.yaml';
 
 // //////////////////////////////////////////////////////////////////////////////
 // PRIVATE METHODS
@@ -64,6 +68,11 @@ const initExpressOpenAPI = (expressApp) => {
   expressOpenapi.initialize(options);
 };
 
+const initSwaggerUI = (expressApp) => {
+  const swaggerDocument = YAML.load(API_DOCUMENT);
+  expressApp.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+};
+
 // //////////////////////////////////////////////////////////////////////////////
 // PUBLIC METHODS
 // //////////////////////////////////////////////////////////////////////////////
@@ -87,13 +96,16 @@ exports.init = async () => {
   // 5. Init ExpressOpenApi
   await initExpressOpenAPI(expressApp);
 
-  // 6. Route for handle the 404 route not found
+  // 6. Expose documentation using swagger-ui-express
+  initSwaggerUI(expressApp);
+
+  // 7. Route for handle the 404 route not found
   expressApp.use(routeNotFoundErrorHandler);
 
-  // 7. Init JWT Manager
+  // 8. Init JWT Manager
   jwtManager.init('mysecret', 600, jwtManager.HS256);
 
-  // 8. App Start Result
+  // 9. App Start Result
   const result = true;
   log.debug(`${MODULE_NAME}:init (OUT) -> App started: ${JSON.stringify(result)}`);
   return result;

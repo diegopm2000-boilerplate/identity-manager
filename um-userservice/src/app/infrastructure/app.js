@@ -3,6 +3,8 @@
 const express = require('express');
 const expressOpenapi = require('express-openapi');
 const bodyParser = require('body-parser');
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
 
 const logger = require('../../shared/infrastructure/log/logFacade');
 
@@ -17,6 +19,8 @@ const mongoInfra = require('../../shared/infrastructure/database/mongo/mongo.inf
 // //////////////////////////////////////////////////////////////////////////////
 
 const MODULE_NAME = '[App]';
+
+const API_DOCUMENT = './src/app/infrastructure/openapi.yaml';
 
 // //////////////////////////////////////////////////////////////////////////////
 // PRIVATE METHODS
@@ -51,7 +55,7 @@ const initExpressOpenAPI = (expressApp) => {
 
   const options = {
     app: expressApp,
-    apiDoc: './src/app/infrastructure/openapi.yaml',
+    apiDoc: API_DOCUMENT,
     consumesMiddleware: { 'application/json': bodyParser.json() },
     errorMiddleware: errorHandler,
     operations: {
@@ -65,6 +69,11 @@ const initExpressOpenAPI = (expressApp) => {
   };
 
   expressOpenapi.initialize(options);
+};
+
+const initSwaggerUI = (expressApp) => {
+  const swaggerDocument = YAML.load(API_DOCUMENT);
+  expressApp.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 };
 
 // //////////////////////////////////////////////////////////////////////////////
@@ -90,10 +99,13 @@ exports.init = async () => {
   // 5. Init ExpressOpenApi
   await initExpressOpenAPI(expressApp);
 
-  // 6. Route for handle the 404 route not found
+  // 6. Expose documentation using swagger-ui-express
+  initSwaggerUI(expressApp);
+
+  // 7. Route for handle the 404 route not found
   expressApp.use(routeNotFoundErrorHandler);
 
-  // 7. Mongo init
+  // 8. Mongo init
   const mongoOptions = {
     mongoURL: process.env.MONGO_URL,
   };
