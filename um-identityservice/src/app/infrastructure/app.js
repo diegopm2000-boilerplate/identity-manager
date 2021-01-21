@@ -9,7 +9,8 @@ const YAML = require('yamljs');
 const log = require('../../shared/infrastructure/log/logFacade');
 
 const healthcheckController = require('../../healthcheck/adapter/controller/healthcheck.controller');
-const authController = require('../../authentication/adapter/controller/authenticate.controller');
+const userController = require('../../user/adapter/controller/user.controller');
+const tokenController = require('../../token/adapter/controller/token.controller');
 
 const jwtManager = require('../../shared/infrastructure/util/jwtManager');
 const webSecurity = require('../../shared/infrastructure/util/webSecurity');
@@ -60,8 +61,11 @@ const initExpressOpenAPI = (expressApp) => {
     errorMiddleware: errorHandler,
     operations: {
       healthcheck: healthcheckController.healthcheck,
-      authenticate: authController.authenticate,
-      refresh: authController.refresh,
+      registerUser: userController.registerUser,
+      authenticateUser: userController.authenticateUser,
+      getUserByToken: userController.getUserByToken,
+      verifyToken: tokenController.verifyToken,
+      refreshToken: tokenController.refreshToken,
     },
   };
 

@@ -1,0 +1,266 @@
+openapi: 3.0.0
+info:
+  title: Identity Service API 
+  description: Identity Service API - Clean Architecture NodeJS
+  version: 0.1.0
+
+servers:
+  - url: /api/identity
+
+paths:
+
+  # Healthcheck
+
+  /healthcheck:
+    get:
+      summary: Healthcheck of the application
+      tags:
+        - Healthcheck
+      operationId: healthcheck
+      responses: 
+        "200": 
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+              example:
+                message: 'OK'
+
+  # Register a new user in the system
+
+  /users/register:
+    post: 
+      summary: Register a new user
+      tags:
+        - Users
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRegistrationData"
+            example:
+              id: xxxxxxxxxxxxxxxxx
+              loginname: userTest
+              name: nameTest
+              surname: surnameTest
+              email: userTest@mail.com
+              password: password
+
+      responses: 
+        "201": 
+          description: user created OK and returned
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/UserData"
+              example:
+                id: xxxxxxxxxxxxxxxxx
+                loginname: userTest
+                name: nameTest
+                surname: surnameTest
+                email: userTest@mail.com
+        "409": 
+          description: Conflict
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Error"
+              example:
+                code: 409
+                message: There is a previous user with the same name in the system
+
+  # Authenticate user by username & password and get token
+
+  /users/authenticate:
+    post:
+      summary: authenticate user in the application returning a JWT Token
+      tags:
+        - "Users"
+      operationId: authenticateUser
+      parameters:
+        - name: username
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/AuthToken"
+
+  /users:
+    get:
+      summary: Get the user by token
+      tags:
+        - Users
+      operationId: getUserByToken
+      parameters:
+        - name: token
+          in: header
+          description: token related to the user
+          required: true
+          schema:
+            type: string
+
+      responses: 
+        "200": 
+          description: Data returned
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/UserData"
+              example:
+                id: xxxxxxxxxxxxxxxxx
+                loginname: userTest
+                name: nameTest
+                surname: surnameTest
+                email: userTest@mail.com
+        "404": 
+          $ref: '#/components/responses/ObjectNotFoundResponse'
+
+  # # Verify the JWT token
+
+  /tokens/verify:
+    get:
+      summary: verify the JWT Token
+      tags:
+        - Tokens
+      operationId: verifyToken
+      parameters:
+        - name: token
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+              example:
+                message: 'OK'
+
+  # Refresh token
+
+  /tokens/refresh:
+    post:
+      summary: authenticate the user token in the application
+      tags:
+        - Tokens
+      operationId: refreshToken
+      parameters:
+        - name: token
+          in: header
+          required: true
+          schema:
+            $ref: "#/components/schemas/AuthToken"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/AuthToken"
+
+components:
+
+  # ##################################################################
+  # RESPONSES
+  # ##################################################################
+
+  responses:
+
+    ObjectNotFoundResponse:
+      description: Object not found
+      content:
+        application/json:
+          schema: 
+            $ref: "#/components/schemas/Error"
+          example:
+            code: 404
+            message: Object not found in the system
+
+  # ##################################################################
+  # SCHEMAS
+  # ##################################################################
+
+  schemas:
+
+    Object:
+      type: object
+
+    Success:
+      type: object
+      properties:
+        message:
+          type: string
+      required: ['message']
+
+      additionalProperties: false
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+      required: ['code', 'message']
+      additionalProperties: false
+
+    AuthToken:      
+      properties:
+        token:
+          type: string
+      required: ['token']
+      additionalProperties: false
+
+    # Id Data
+
+    IdData:
+      type: object
+      properties:
+        id:
+          type: string
+      required:  ['id']
+      additionalProperties: false
+
+    # Users
+        
+    UserBasicData:
+      type: object 
+      properties:
+        loginname:
+          type: string
+        name:
+          type: string
+        surname:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      required: ['loginname', 'name', 'surname', 'email', 'password']
+      additionalProperties: false
+
+    UserData:
+      allOf:
+        - $ref: '#/components/schemas/IdData'
+        - $ref: '#/components/schemas/UserBasicData'
+    
+    UserRegistrationData:
+      allOf:
+        - $ref: '#/components/schemas/UserBasicData'
