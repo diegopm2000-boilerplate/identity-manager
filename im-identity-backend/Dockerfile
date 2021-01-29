@@ -1,4 +1,4 @@
-FROM node:12.15.0-alpine
+FROM node:14.15.4-alpine
 
 LABEL mantainer="Diego Perez Molinero"
 
