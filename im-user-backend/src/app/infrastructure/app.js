@@ -31,9 +31,26 @@ const MODULE_NAME = '[App]';
 
 const API_DOCUMENT = './src/app/infrastructure/openapi.yaml';
 
+const DEFAULT_PORT = 8080;
+
+const config = {};
+
 // //////////////////////////////////////////////////////////////////////////////
 // PRIVATE METHODS
 // //////////////////////////////////////////////////////////////////////////////
+
+function loadConfig() {
+  logger.debug(`${MODULE_NAME}:${loadConfig.name} (IN) -> no params`);
+
+  logger.debug(`${MODULE_NAME}:${loadConfig.name} (MID) -> loading config from environment...`);
+
+  config.expressPort = process.env.EXPRESS_PORT;
+  config.mongoURL = process.env.MONGO_URL;
+
+  logger.debug(`${MODULE_NAME}:${loadConfig.name} (MID) -> config loaded: ${JSON.stringify(config)}`);
+
+  logger.debug(`${MODULE_NAME}:${loadConfig.name} (OUT) -> Done!`);
+}
 
 // eslint-disable-next-line no-unused-vars
 function errorHandler(err, req, res, next) {
@@ -50,11 +67,13 @@ function routeNotFoundErrorHandler(req, res, next) {
   res.status(404).json(errorObj);
 }
 
-function initExpress(expressConfig) {
-  logger.debug(`${MODULE_NAME}:${initExpress.name} (IN) -> expressConfig: ${JSON.stringify(expressConfig)}`);
+function initExpress(portIN) {
+  logger.debug(`${MODULE_NAME}:${initExpress.name} (IN) -> portIN: ${portIN}`);
   const expressApp = express();
 
-  expressApp.listen(expressConfig.port);
+  const port = portIN || DEFAULT_PORT;
+
+  expressApp.listen(port);
 
   logger.debug(`${MODULE_NAME}:${initExpress.name} (OUT) -> expressApp: <<expressApp>>`);
   return expressApp;
@@ -113,12 +132,10 @@ exports.init = async () => {
   logger.debug(`${MODULE_NAME}:init (IN) --> no params`);
 
   // 2. Load Config from environment
-  const expressPort = process.env.EXPRESS_PORT;
-  logger.debug(`${MODULE_NAME}:init (MID) --> expressPort: ${expressPort}`);
+  loadConfig();
 
   // 3. Init Express
-  const expressConfig = { port: expressPort };
-  const expressApp = initExpress(expressConfig);
+  const expressApp = initExpress(config.expressPort);
 
   // 4. Init Web Security
   webSecurity.init(expressApp);
@@ -133,7 +150,7 @@ exports.init = async () => {
   expressApp.use(routeNotFoundErrorHandler);
 
   // 8. Mongo init
-  await mongoInfra.init({ mongoURL: process.env.MONGO_URL });
+  await mongoInfra.init({ mongoURL: config.mongoURL });
 
   // 9. User UseCases
   initHealthcheckUC();

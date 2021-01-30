@@ -31,13 +31,30 @@ const MODULE_NAME = '[App]';
 
 const API_DOCUMENT = './src/app/infrastructure/openapi.yaml';
 
+const DEFAULT_PORT = 8080;
+
+const config = {};
+
 // //////////////////////////////////////////////////////////////////////////////
 // PRIVATE METHODS
 // //////////////////////////////////////////////////////////////////////////////
 
+function loadConfig() {
+  logger.debug(`${MODULE_NAME}:${loadConfig.name} (IN) -> no params`);
+
+  logger.debug(`${MODULE_NAME}:${loadConfig.name} (MID) -> loading config from environment...`);
+
+  config.expressPort = process.env.EXPRESS_PORT;
+  config.userServiceEndpoint = process.env.USER_SERVICE_ENDPOINT;
+
+  logger.debug(`${MODULE_NAME}:${loadConfig.name} (MID) -> config loaded: ${JSON.stringify(config)}`);
+
+  logger.debug(`${MODULE_NAME}:${loadConfig.name} (OUT) -> Done!`);
+}
+
 // eslint-disable-next-line no-unused-vars
 function errorHandler(err, req, res, next) {
-  logger.error(`${MODULE_NAME}:${errorHandler.name} (ERROR) --> error: ${err.stack}`);
+  logger.error(`${MODULE_NAME}:${errorHandler.name} (ERROR) --> error: ${err.stack}, message: ${err.details[0].message}`);
 
   const status = (err.status) ? err.status : 500;
   const errorObj = { code: status, message: err.message };
@@ -50,11 +67,13 @@ function routeNotFoundErrorHandler(req, res, next) {
   res.status(404).json(errorObj);
 }
 
-function initExpress(expressConfig) {
-  logger.debug(`${MODULE_NAME}:${initExpress.name} (IN) -> expressConfig: ${JSON.stringify(expressConfig)}`);
+function initExpress(portIN) {
+  logger.debug(`${MODULE_NAME}:${initExpress.name} (IN) -> portIN: ${portIN}`);
   const expressApp = express();
 
-  expressApp.listen(expressConfig.port);
+  const port = portIN || DEFAULT_PORT;
+
+  expressApp.listen(port);
 
   logger.debug(`${MODULE_NAME}:${initExpress.name} (OUT) -> expressApp: <<expressApp>>`);
   return expressApp;
@@ -111,10 +130,10 @@ function initTokenUC() {
   logger.debug(`${MODULE_NAME}:${initUserUC.name} (OUT) -> Done`);
 }
 
-function initUserRemoteRepository() {
-  logger.debug(`${MODULE_NAME}:${initUserRemoteRepository.name} (IN) -> no params`);
+function initUserRemoteRepository(userServiceEndpoint) {
+  logger.debug(`${MODULE_NAME}:${initUserRemoteRepository.name} (IN) -> userServiceEndpoint: ${userServiceEndpoint}`);
 
-  userRemoteRepository.init(process.env.USER_SERVICE_ENDPOINT);
+  userRemoteRepository.init(userServiceEndpoint);
 
   logger.debug(`${MODULE_NAME}:${initUserRemoteRepository.name} (OUT) -> Done`);
 }
@@ -129,12 +148,10 @@ exports.init = async () => {
   logger.debug(`${MODULE_NAME}:init (IN) --> no params`);
 
   // 2. Load Config from environment
-  const expressPort = process.env.EXPRESS_PORT;
-  logger.debug(`${MODULE_NAME}:init (MID) --> expressPort: ${expressPort}`);
+  loadConfig();
 
   // 3. Init Express
-  const expressConfig = { port: expressPort };
-  const expressApp = initExpress(expressConfig);
+  const expressApp = initExpress(config.expressPort);
 
   // 4. Init Web Security
   webSecurity.init(expressApp);
@@ -155,7 +172,7 @@ exports.init = async () => {
   initHealthcheckUC();
   initUserUC();
   initTokenUC();
-  initUserRemoteRepository();
+  initUserRemoteRepository(config.userServiceEndpoint);
 
   // 10. App Start Result
   const result = true;

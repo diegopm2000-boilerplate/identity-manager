@@ -11,6 +11,14 @@ let presenter;
 let tokenManager;
 
 // //////////////////////////////////////////////////////////////////////////////
+// Private Methods
+// //////////////////////////////////////////////////////////////////////////////
+
+function removeBearer(token) {
+  return (token.startsWith('Bearer ')) ? token.replace('Bearer ', '') : token;
+}
+
+// //////////////////////////////////////////////////////////////////////////////
 // Public Methods
 // //////////////////////////////////////////////////////////////////////////////
 
@@ -20,10 +28,12 @@ function init(loggerIN, presenterIN, tokenManagerIN) {
   tokenManager = tokenManagerIN;
 }
 
-async function refreshToken(token) {
+async function refreshToken(tokenIN) {
   try {
     // IN
-    logger.debug(`${MODULE_NAME}:${refreshToken.name} (IN)  -> token: ${token}`);
+    logger.debug(`${MODULE_NAME}:${refreshToken.name} (IN)  -> tokenIN: ${tokenIN}`);
+
+    const token = removeBearer(tokenIN);
 
     // Refresh the token
     const tokenResult = tokenManager.refresh(token);
@@ -42,10 +52,12 @@ async function refreshToken(token) {
   }
 }
 
-async function verifyToken(token) {
+async function verifyToken(tokenIN) {
   try {
     // IN
-    logger.debug(`${MODULE_NAME}:${verifyToken.name} (IN)  -> token: ${token}`);
+    logger.debug(`${MODULE_NAME}:${verifyToken.name} (IN)  -> tokenIN: ${tokenIN}`);
+
+    const token = removeBearer(tokenIN);
 
     // Verify the token
     const tokenResult = tokenManager.check(token);
