@@ -14,8 +14,11 @@ let tokenManager;
 // Private Methods
 // //////////////////////////////////////////////////////////////////////////////
 
-function removeBearer(token) {
-  return (token.startsWith('Bearer ')) ? token.replace('Bearer ', '') : token;
+function handleError(error) {
+  if (error.message === tokenManager.ERR_BAD_FORMAT_TOKEN || error.message === tokenManager.ERR_NO_TOKEN_SUPPLIED) {
+    return presenter.presentBadEntry();
+  }
+  throw error;
 }
 
 // //////////////////////////////////////////////////////////////////////////////
@@ -28,12 +31,10 @@ function init(loggerIN, presenterIN, tokenManagerIN) {
   tokenManager = tokenManagerIN;
 }
 
-async function refreshToken(tokenIN) {
+async function refreshToken(token) {
   try {
     // IN
-    logger.debug(`${MODULE_NAME}:${refreshToken.name} (IN)  -> tokenIN: ${tokenIN}`);
-
-    const token = removeBearer(tokenIN);
+    logger.debug(`${MODULE_NAME}:${refreshToken.name} (IN)  -> tokenIN: ${token}`);
 
     // Refresh the token
     const tokenResult = tokenManager.refresh(token);
@@ -45,19 +46,14 @@ async function refreshToken(tokenIN) {
     logger.debug(`${MODULE_NAME}:${refreshToken.name} (OUT)  -> result: ${JSON.stringify(result)}`);
     return (result);
   } catch (error) {
-    if (error.message === tokenManager.ERR_BAD_FORMAT_TOKEN) {
-      return presenter.presentBadEntry();
-    }
-    throw error;
+    return handleError(error);
   }
 }
 
-async function verifyToken(tokenIN) {
+async function verifyToken(token) {
   try {
     // IN
-    logger.debug(`${MODULE_NAME}:${verifyToken.name} (IN)  -> tokenIN: ${tokenIN}`);
-
-    const token = removeBearer(tokenIN);
+    logger.debug(`${MODULE_NAME}:${verifyToken.name} (IN)  -> token: ${token}`);
 
     // Verify the token
     const tokenResult = tokenManager.check(token);
@@ -70,10 +66,7 @@ async function verifyToken(tokenIN) {
     logger.debug(`${MODULE_NAME}:${verifyToken.name} (OUT)  -> result: ${JSON.stringify(result)}`);
     return presenter.presentObject(result);
   } catch (error) {
-    if (error.message === tokenManager.ERR_BAD_FORMAT_TOKEN) {
-      return presenter.presentBadEntry();
-    }
-    throw error;
+    return handleError(error);
   }
 }
 
